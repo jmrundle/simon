@@ -1,0 +1,17 @@
+module keycode_decoder (
+    input       [7:0]   keycode,
+    output reg  [2:0]   code
+    );
+
+    always @(keycode) begin
+        case (keycode)
+            8'h15: code = 3'd0;     // q
+            8'h1D: code = 3'd1;     // w
+            8'h1C: code = 3'd2;     // a
+            8'h1B: code = 3'd3;     // s
+            8'h5A: code = 3'd0;     // enter key
+            default: code = 3'd5;   // none
+        endcase
+    end
+
+endmodule : keycode_decoder

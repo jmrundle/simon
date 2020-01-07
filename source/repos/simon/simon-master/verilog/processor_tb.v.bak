@@ -1,0 +1,49 @@
+`timescale 1ns/1ns
+module processor_tb();
+
+	reg				clk;
+	reg 				reset;
+	reg 	[8:0]		xvga;
+	reg	[7:0] 	yvga;
+	reg 	[7:0]		keycode;
+	reg				make;
+	
+	wire	[2:0]		color;
+	wire	[5:0] 	level;
+
+
+	processor uut(
+		.clk			(clk),
+		.reset		(reset),
+		.xvga			(xvga),
+		.yvga			(yvga),
+		.keycode		(keycode),
+		.make			(make),
+		.color 		(color),
+		.level		(level)
+		);
+
+
+	always #2 	clk = ~clk;
+	
+	
+	initial begin
+	
+		clk = 0; reset = 0; xvga = 9'd160; yvga = 8'd40; keycode = 8'd0; make = 0;
+		
+		#300 keycode = 5A; make = 1;
+		#10 make = 0;
+		#10 xvga = 1; yvga = 1;
+		#10 xvga = 100; yvga = 100;
+		#10 xvga = 120; yvga = 180;
+		#10 xvga = 280; yvga = 177;
+		#10 xvga = 30; yvga = 15;
+		#10;
+		$stop;
+	
+	end
+
+
+
+
+endmodule

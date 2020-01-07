@@ -1,0 +1,36 @@
+`timescale 1ns/1ns
+
+module controller_tb();
+
+		reg clk,
+	reg reset,
+
+	// from datapath
+	reg enter_pressed,
+	reg key_pressed,
+	reg valid_reg,
+	reg red_pulse,
+	reg green_pulse,
+	reg yellow_pulse,
+	reg blue_pulse,
+	reg raddr_eq_level,
+	reg raddr_eq_max,
+	reg waddr_eq_max,
+	reg level_eq_max,
+	reg wait_timer_pulse,
+	reg disp_timer_pulse,
+	reg correct,
+	
+	// to datapath
+	wire s_raddr,
+	wire en_raddr,
+	wire s_waddr,
+	wire en_waddr,
+	wire s_level,
+	wire en_level,
+	wire [3:0] s_bg, 
+	wire en_bg,
+	wire en_rng,
+	wire en_audio,
+	wire res_wait_timer,
+	wire res_disp_timer

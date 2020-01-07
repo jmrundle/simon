@@ -1,0 +1,32 @@
+module digit_rom (
+	input clk,
+	input [8:0] xvga,
+	input [7:0] yvga,
+	input [3:0] number,
+	
+	output [2:0] color
+	);
+	parameter X = 0;
+	parameter Y = 0;
+	
+	wire x = xvga - X;
+	wire y = yvga - Y;
+	
+	
+	wire [2:0] zero_col, one_col, two_col, three_col, four_col, five_col, six_col, seven_col, eight_col, nine_col;
+	
+	mux_10x1 sprite_mux (
+		.d0 (zero_col),
+		.d1 (one_col),
+		.d2 (two_col),
+		.d3 (three_col),
+		.d4 (four_col),
+		.d5 (five_col),
+		.d6 (six_col),
+		.d7 (seven_col),
+		.d8 (eight_col),
+		.d9 (nine_col),
+		.s  (number),
+		.f  (color)
+	);
+	

@@ -1,0 +1,76 @@
+module text_sprites (
+	input clk,
+	input [8:0] xvga,
+	input [7:0] yvga,
+	input [3:0] level_10, level_01, max_score_10, max_score_01,
+	output [2:0] color
+	);
+	
+	parameter WIDTH = 10;
+	parameter HEIGHT = 12;
+	parameter LEVEL_10_X = 70;
+	parameter LEVEL_01_X = 80;
+	parameter MAX_SCORE_10_X = 280;
+	parameter MAX_SCORE_01_X = 290;
+	parameter Y = 3;
+	
+	wire in_level_10 = (xvga >= LEVEL_10_X && xvga < LEVEL_10+WIDTH && yvga >= Y && yvga < Y+HEIGHT);
+	wire in_level_01 = (xvga >= LEVEL_01_X && xvga < LEVEL_01+WIDTH && yvga >= Y && yvga < y+HEIGHT);
+	wire in_max_score_10 = (xvga >= MAX_SCORE_10_X && xvga < MAX_SCORE_10+WIDTH && yvga >= Y && yvga < y+HEIGHT);
+	wire in_max_score_01 = (xvga >= MAX_SCORE_01_X && xvga < MAX_SCORE_01+WIDTH && yvga >= Y && yvga < y+HEIGHT);
+	
+	wire [3:0] select = {in_level_10, in_level_01, in_max_score_10, in_max_score_01};
+	
+	always @(xvga, yvga)
+		case (select)
+			0001: color = max_score_01_color;
+			0010: color = max_score_10_color;
+			0100: color = level_01_color;
+			1000: color = level_10_color;
+			default: color = 4'd0;
+		endcase
+	
+	digit_sprite level_10_sprite (
+		.clk (clk),
+		.xvga (xvga),
+		.yvga (yvga),
+		.number (level_10)
+		.color (level_10_color)
+	);
+	defparam level_10_sprite.X_POS = LEVEL_10_X;
+	defparam level_10_sprite.Y_POS = Y;
+	
+	
+	digit_sprite level_01_sprite (
+		.clk (clk),
+		.xvga (xvga),
+		.yvga (yvga),
+		.number (level_01)
+		.color (level_01_color)
+	);
+	defparam level_01_sprite.X_POS = LEVEL_01_X;
+	defparam level_01_sprite.Y_POS = Y;
+	
+	digit_sprite max_score_10_sprite (
+		.clk (clk),
+		.xvga (xvga),
+		.yvga (yvga),
+		.number (max_score_10)
+		.color (max_score_10_color)
+	);
+	defparam max_score_10_sprite.X_POS = MAX_SCORE_10_X;
+	defparam max_score_10_sprite.Y_POS = Y;
+	
+	
+	digit_sprite max_score_01_sprite (
+		.clk (clk),
+		.xvga (xvga),
+		.yvga (yvga),
+		.number (max_score_01)
+		.color (max_score_01)
+	);
+	defparam max_score_01_sprite.X_POS = MAX_SCORE_01_X;
+	defparam max_score_01_sprite.Y_POS = Y;
+	
+
+endmodule

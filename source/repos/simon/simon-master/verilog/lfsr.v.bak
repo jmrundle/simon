@@ -1,0 +1,12 @@
+module lfsr (
+	input 				clk,
+	output reg [5:0] 	q
+	);
+	
+	// seed
+	initial q = 6'd5;
+	
+	always @(posedge clk)
+		q <= {q[6:0], q[7]^q[0]};
+		
+endmodule

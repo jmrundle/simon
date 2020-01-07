@@ -1,0 +1,10 @@
+module bg_mux (
+	input [8:0] xvga, 
+	input [7:0] yvga
+	input bg,
+	output [2:0] color
+	);
+	
+	always @(xvga, yvga, bg)
+		case (bg)
+			0: 
